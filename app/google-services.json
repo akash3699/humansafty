@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "421389721130",
+    "firebase_url": "https://humansafty-188306.firebaseio.com",
+    "project_id": "humansafty-188306",
+    "storage_bucket": "humansafty-188306.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:421389721130:android:386df39d8219eaad",
+        "android_client_info": {
+          "package_name": "com.pdfupload.example.dell.humansafty"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "421389721130-v6uh1ehkdchk1ncv1jc5uhminhhb56vd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pdfupload.example.dell.humansafty",
+            "certificate_hash": "08f581857490e83dd9b296bb73790ef8fbd7fc1e"
+          }
+        },
+        {
+          "client_id": "421389721130-iodcc8i3r5mg6c5q1oks6curleercvr1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMGOPRWYkrkH1jXwJU3jlmC_CUgF0VupI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "421389721130-iodcc8i3r5mg6c5q1oks6curleercvr1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

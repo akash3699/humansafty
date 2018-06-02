@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_login"
+            android:icon="@drawable/ic_person_pin_black_24dp"
+            android:title="Logout" />
+        <item
+            android:id="@+id/nav_search_person"
+            android:icon="@drawable/ic_mode_edit_black_24dp"
+            android:title="Search Person" />
+
+         <item
+             android:id="@+id/nav_heartview"
+             android:icon="@drawable/ic_video_library_black_24dp"
+             android:title="Health Record" />
+        <item
+            android:id="@+id/nav_emergency"
+            android:icon="@drawable/ic_location_on_black_24dp"
+            android:title="Emeregency Contact" />
+
+    </group>
+
+
+
+</menu>
