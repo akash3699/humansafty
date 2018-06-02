@@ -37,12 +37,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.pdfupload.example.dell.humansafty.constant.Constant.SERVER_ADDRESS;
+
 public class DemoGeolocationAmbulence extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         com.google.android.gms.location.LocationListener {
-    String targeturl="http://android.dhamalexim.com/HumanSafty/ambulance.php?apicall=login";
-    String targeturl2="http://android.dhamalexim.com/HumanSafty/balika.php?apicall=login";
-    String numberurl="http://android.dhamalexim.com/HumanSafty/fetchalllotaction.php";
+    String targeturl=SERVER_ADDRESS+"HumanSafty/ambulance.php?apicall=login";
+    String targeturl2=SERVER_ADDRESS+"HumanSafty/balika.php?apicall=login";
+    String numberurl=SERVER_ADDRESS+"HumanSafty/fetchalllotaction.php";
 
     private List<locationmodel> dataObjectList;
     double la,lo;

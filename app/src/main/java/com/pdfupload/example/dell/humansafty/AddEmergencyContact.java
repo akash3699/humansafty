@@ -24,6 +24,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.pdfupload.example.dell.humansafty.constant.Constant.SERVER_ADDRESS;
+
 public class AddEmergencyContact extends AppCompatActivity {
 EditText family1,family2,family3,friend1,friend2,friend3;
     Button b1,b2,b3,b4,b5,b6,insert;
@@ -100,7 +102,7 @@ fetchdata();
         final ProgressDialog progressDialog = new ProgressDialog(AddEmergencyContact.this);
         progressDialog.setMessage("loading..Please Wait...");
         progressDialog.show();
-        String targeturl="http://android.dhamalexim.com/HumanSafty/updatefriend3.php";
+        String targeturl=SERVER_ADDRESS+"HumanSafty/updatefriend3.php";
 
         Log.d("targeturl_employee",targeturl);
 
@@ -159,7 +161,7 @@ fetchdata();
         progressDialog.setMessage("loading..Please Wait...");
         progressDialog.show();
         //String targeturl="http://hospital.myindiamade.com/MoneyTransfer/login.php?apicall=signup";
-        String targeturl="http://android.dhamalexim.com/HumanSafty/updatefriend2.php";
+        String targeturl=SERVER_ADDRESS+"HumanSafty/updatefriend2.php";
 
         Log.d("targeturl_employee",targeturl);
 
@@ -218,7 +220,7 @@ fetchdata();
         progressDialog.setMessage("loading..Please Wait...");
         progressDialog.show();
         //String targeturl="http://hospital.myindiamade.com/MoneyTransfer/login.php?apicall=signup";
-        String targeturl="http://android.dhamalexim.com/HumanSafty/updatefriend1.php";
+        String targeturl=SERVER_ADDRESS+"HumanSafty/updatefriend1.php";
 
         Log.d("targeturl_employee",targeturl);
 
@@ -277,7 +279,7 @@ fetchdata();
         progressDialog.setMessage("loading..Please Wait...");
         progressDialog.show();
         //String targeturl="http://hospital.myindiamade.com/MoneyTransfer/login.php?apicall=signup";
-        String targeturl="http://android.dhamalexim.com/HumanSafty/updatefamily3.php";
+        String targeturl=SERVER_ADDRESS+"HumanSafty/updatefamily3.php";
 
         Log.d("targeturl_employee",targeturl);
 
@@ -336,7 +338,7 @@ fetchdata();
         progressDialog.setMessage("loading..Please Wait...");
         progressDialog.show();
         //String targeturl="http://hospital.myindiamade.com/MoneyTransfer/login.php?apicall=signup";
-        String targeturl="http://android.dhamalexim.com/HumanSafty/updatefamily2.php";
+        String targeturl=SERVER_ADDRESS+"HumanSafty/updatefamily2.php";
 
         Log.d("targeturl_employee",targeturl);
 
@@ -395,7 +397,7 @@ fetchdata();
         progressDialog.setMessage("loading..Please Wait...");
         progressDialog.show();
         //String targeturl="http://hospital.myindiamade.com/MoneyTransfer/login.php?apicall=signup";
-        String targeturl="http://android.dhamalexim.com/HumanSafty/updatefamily1.php";
+        String targeturl=SERVER_ADDRESS+"HumanSafty/updatefamily1.php";
 
         Log.d("targeturl_employee",targeturl);
 
@@ -450,7 +452,7 @@ fetchdata();
     }
 
     private void fetchdata() {
-        String targetURL_Login="http://android.dhamalexim.com/HumanSafty/insertfamilyfriends.php?apicall=login";
+        String targetURL_Login=SERVER_ADDRESS+"HumanSafty/insertfamilyfriends.php?apicall=login";
 
         StringRequest stringRequestLogInBtn = new StringRequest(Request.Method.POST,
                 targetURL_Login,
@@ -515,7 +517,7 @@ fetchdata();
         progressDialog.setMessage("loading..Please Wait...");
         progressDialog.show();
         //String targeturl="http://hospital.myindiamade.com/MoneyTransfer/login.php?apicall=signup";
-        String targeturl="http://android.dhamalexim.com/HumanSafty/insertfamilyfriends.php?apicall=signup";
+        String targeturl=SERVER_ADDRESS+"HumanSafty/insertfamilyfriends.php?apicall=signup";
 
         Log.d("targeturl_employee",targeturl);
 

@@ -33,6 +33,8 @@ import java.util.Map;
 
 import butterknife.ButterKnife;
 
+import static com.pdfupload.example.dell.humansafty.constant.Constant.SERVER_ADDRESS;
+
 public class SearchPerson extends AppCompatActivity implements OnMapReadyCallback,
         GoogleMap.OnMarkerDragListener,GoogleMap.OnMapLongClickListener{
 
@@ -51,7 +53,7 @@ public class SearchPerson extends AppCompatActivity implements OnMapReadyCallbac
     //send message
     double Latitude,Longitude;
     RequestQueue requestQueue;
-    public static final String DISPLAY_URL ="http://android.dhamalexim.com/HumanSafty/fetchlocation.php";
+    public static final String DISPLAY_URL =SERVER_ADDRESS+"HumanSafty/fetchlocation.php";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

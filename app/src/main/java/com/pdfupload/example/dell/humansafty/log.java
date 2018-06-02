@@ -26,6 +26,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.pdfupload.example.dell.humansafty.constant.Constant.SERVER_ADDRESS;
+
 public class log extends AppCompatActivity {
     EditText login_id,login_pwd;
     Button login_button;
@@ -84,7 +86,7 @@ public class log extends AppCompatActivity {
 
         // String targetURL_Login="http://hospital.myindiamade.com/MoneyTransfer/login.php?apicall=login";
 
-        String targetURL_Login="http://android.dhamalexim.com/HumanSafty/login.php?apicall=login";
+        String targetURL_Login=SERVER_ADDRESS+"HumanSafty/login.php?apicall=login";
 
         StringRequest stringRequestLogInBtn = new StringRequest(Request.Method.POST,
                 targetURL_Login,

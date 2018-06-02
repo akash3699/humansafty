@@ -21,9 +21,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.pdfupload.example.dell.humansafty.constant.Constant.SERVER_ADDRESS;
+
 public class ViewHeartrate extends AppCompatActivity {
 ListView heartbeat;
-    String numberurl="http://android.dhamalexim.com/HumanSafty/fetchheart.php";
+    String numberurl=SERVER_ADDRESS+"HumanSafty/fetchheart.php";
     ArrayList<String> CountryName;
     ArrayAdapter<String> madapter;
     JSONArray message;

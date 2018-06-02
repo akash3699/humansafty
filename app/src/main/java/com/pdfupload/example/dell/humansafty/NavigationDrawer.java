@@ -16,24 +16,22 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -69,8 +67,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import static com.pdfupload.example.dell.humansafty.constant.Constant.SERVER_ADDRESS;
+
 public class NavigationDrawer extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,GoogleApiClient.ConnectionCallbacks,
+        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         com.google.android.gms.location.LocationListener {
     private static final int REQUEST_ENABLE_BT = 1;
@@ -79,11 +79,11 @@ public class NavigationDrawer extends AppCompatActivity
     SharedPreferences sp;
     ArrayList<BluetoothDevice> pairedDeviceArrayList;
 
-    TextView textInfo, textStatus,textStatus2 ;
+    TextView textInfo, textStatus, textStatus2;
     ListView listViewPairedDevice;
     LinearLayout inputPane;
     EditText inputField;
-JSONArray message;
+    JSONArray message;
 
     Button btnSend;
 
@@ -106,27 +106,28 @@ JSONArray message;
     private com.google.android.gms.location.LocationListener listener;
     private long UPDATE_INTERVAL = 2 * 1000;  /* 10 secs */
     private long FASTEST_INTERVAL = 2000; /* 2 sec */
-    String lat1,lon1,lat2,lon2;
+    String lat1, lon1, lat2, lon2;
     private LocationManager locationManager;
     private static final String TAG1 = "DashBoard";
     private static final String PREF_USER_MOBILE_PHONE = "pref_user_mobile_phone";
     private static final int SMS_PERMISSION_CODE = 0;
-Button panic, helth;
+    Button panic, helth;
     //  String mNumberEditText[] = {"9960080097","9890005536","9545545660"};
     private String mUserMobilePhone;
     private SharedPreferences mSharedPreferences;
-    String Updateurl="http://android.dhamalexim.com/HumanSafty/uploadlocation.php";
-    String url="http://android.dhamalexim.com/HumanSafty/updateToken.php";
-    String targeturl="http://android.dhamalexim.com/HumanSafty/balika.php?apicall=login";
-    String numberurl="http://android.dhamalexim.com/HumanSafty/FatchNumber.php";
+    String Updateurl = SERVER_ADDRESS + "HumanSafty/uploadlocation.php";
+    String url = SERVER_ADDRESS + "HumanSafty/updateToken.php";
+    String targeturl = SERVER_ADDRESS + "HumanSafty/balika.php?apicall=login";
+    String numberurl = SERVER_ADDRESS + "HumanSafty/FatchNumber.php";
     ArrayList<String> CountryName;
 
     private int progressStatus = 0;
     private Handler handler = new Handler();
     private boolean isCanceled;
-    String id,uname;
-NavigationView navigationView;
-Button btnClear;
+    String id, uname;
+    NavigationView navigationView;
+    Button btnClear;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,19 +142,19 @@ Button btnClear;
                 .addApi(LocationServices.API)
                 .build();
         //sendnotification();
-        sp=getApplicationContext().getSharedPreferences("login",MODE_PRIVATE);
-        id =  sp.getString("stuid",null);
-        uname = sp.getString("username",null);
-        navigationView = (NavigationView)findViewById(R.id.nav_view);
+        sp = getApplicationContext().getSharedPreferences("login", MODE_PRIVATE);
+        id = sp.getString("stuid", null);
+        uname = sp.getString("username", null);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
 
         View header = navigationView.getHeaderView(0);
-        TextView tv = (TextView)header.findViewById(R.id.nav_uname);
+        TextView tv = (TextView) header.findViewById(R.id.nav_uname);
         tv.setText(uname);
         nunberfatch();
 
         checkLocation(); //check whether location service is enable or not in your  phone
-      //  startLocationUpdates();
-        btnClear = (Button)findViewById(R.id.clear);
+        //  startLocationUpdates();
+        btnClear = (Button) findViewById(R.id.clear);
         btnClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,28 +163,28 @@ Button btnClear;
             }
         });
 
-updatetoken();
-Log.d("oyee",id);
-        CountryName=new ArrayList<String>();
-        textInfo = (TextView)findViewById(R.id.info);
-        textStatus = (TextView)findViewById(R.id.status);
-        textStatus2 = (TextView)findViewById(R.id.status2);
-        listViewPairedDevice = (ListView)findViewById(R.id.pairedlist);
+        updatetoken();
+        Log.d("oyee", id);
+        CountryName = new ArrayList<String>();
+        textInfo = (TextView) findViewById(R.id.info);
+        textStatus = (TextView) findViewById(R.id.status);
+        textStatus2 = (TextView) findViewById(R.id.status2);
+        listViewPairedDevice = (ListView) findViewById(R.id.pairedlist);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mUserMobilePhone = mSharedPreferences.getString(PREF_USER_MOBILE_PHONE, "");
 
-panic = (Button) findViewById(R.id.button_panic);
+        panic = (Button) findViewById(R.id.button_panic);
         panic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(NavigationDrawer.this,DemoGeolocationPolice.class));
+                startActivity(new Intent(NavigationDrawer.this, DemoGeolocationPolice.class));
             }
         });
         helth = (Button) findViewById(R.id.button_helthcare);
         helth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(NavigationDrawer.this,DemoGeolocationAmbulence.class));
+                startActivity(new Intent(NavigationDrawer.this, DemoGeolocationAmbulence.class));
             }
         });
      /*   inputPane = (LinearLayout)findViewById(R.id.inputpane);
@@ -199,7 +200,7 @@ panic = (Button) findViewById(R.id.button_panic);
                 }
             }});*/
 
-        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH)){
+        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH)) {
             Toast.makeText(this,
                     "FEATURE_BLUETOOTH NOT support",
                     Toast.LENGTH_LONG).show();
@@ -224,8 +225,6 @@ panic = (Button) findViewById(R.id.button_panic);
         textInfo.setText(stInfo);
 
 
-
-
         mLatitudeTextView = (TextView) findViewById((R.id.latitude_textview));
         mLongitudeTextView = (TextView) findViewById((R.id.longitude_textview));
 
@@ -235,8 +234,7 @@ panic = (Button) findViewById(R.id.button_panic);
                 .addApi(LocationServices.API)
                 .build();
 
-        mLocationManager = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
-
+        mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -262,8 +260,8 @@ panic = (Button) findViewById(R.id.button_panic);
                 }
                 startActivity(new Intent(NavigationDrawer.this,DemoGeolocationAmbulence.class));*/
 
-               // uploadlocation();
-                 //initViews();
+                // uploadlocation();
+                //initViews();
                 // sendnotification();
 
             }
@@ -328,20 +326,16 @@ panic = (Button) findViewById(R.id.button_panic);
                         try {
 
                             progressDialog.dismiss();
-                            JSONObject jsonObject=new JSONObject(response);
+                            JSONObject jsonObject = new JSONObject(response);
 //login
-                            String message=jsonObject.getString("message");
+                            String message = jsonObject.getString("message");
                             if (jsonObject.getString("result").equals("1")) {
 
-                                Toast.makeText(NavigationDrawer.this, message+"Upload", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(NavigationDrawer.this, message + "Upload", Toast.LENGTH_SHORT).show();
                                /* Intent i = new Intent(NavigationDrawer.this,DemoGeolocation.class);
                                 i.putExtra("id",id);
                                 startActivity(i);*/
-                            }
-
-                            else
-                            if (jsonObject.getString("error").equals(true))
-                            {
+                            } else if (jsonObject.getString("error").equals(true)) {
                                 Toast.makeText(NavigationDrawer.this, "Something Wrong", Toast.LENGTH_SHORT).show();
                             }
 
@@ -360,9 +354,9 @@ panic = (Button) findViewById(R.id.button_panic);
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("id",id);
-                params.put("token",token);
-               // params.put("Longitude",mLongitudeTextView.getText().toString());
+                params.put("id", id);
+                params.put("token", token);
+                // params.put("Longitude",mLongitudeTextView.getText().toString());
 
                 /*params.put("id",id);
                 params.put("Latitude","123456");
@@ -384,19 +378,15 @@ panic = (Button) findViewById(R.id.button_panic);
                         try {
 
 
-                            JSONObject jsonObject=new JSONObject(response);
+                            JSONObject jsonObject = new JSONObject(response);
 
                             // Log.d("url_app product",jsonObject.getString("error"));
                             //  Log.d("message",jsonObject.getString("message"));
-                            String message=jsonObject.getString("message");
+                            String message = jsonObject.getString("message");
 
-                            if (message.equals("Login successfull"))
-                            {
+                            if (message.equals("Login successfull")) {
                                 Toast.makeText(NavigationDrawer.this, message, Toast.LENGTH_SHORT).show();
-                            }
-                            else
-                            if (message.equals("Something went wrong"))
-                            {
+                            } else if (message.equals("Something went wrong")) {
                                 Toast.makeText(NavigationDrawer.this, message, Toast.LENGTH_SHORT).show();
                             }
 
@@ -415,8 +405,8 @@ panic = (Button) findViewById(R.id.button_panic);
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("id","1");
-                params.put("myid",id);
+                params.put("id", "1");
+                params.put("myid", id);
                 // params.put("Email","");
 
                 return params;
@@ -436,8 +426,7 @@ panic = (Button) findViewById(R.id.button_panic);
                         JSONObject j = null;
                         try {
 
-                            j=new JSONObject(response);
-
+                            j = new JSONObject(response);
 
 
                             message = j.getJSONArray("message");
@@ -452,7 +441,7 @@ panic = (Button) findViewById(R.id.button_panic);
                     public void onErrorResponse(VolleyError error) {
                         //  progressDialog.dismiss();
                     }
-                }) ;
+                });
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
 
@@ -480,16 +469,17 @@ panic = (Button) findViewById(R.id.button_panic);
         checkAndUpdateUserPrefNumber();
 
 
-        for(String number : CountryName) {
-            SmsHelper.sendDebugSms(number, "Help Me I am in trouble\n My Id Is: "+id);
+        for (String number : CountryName) {
+            SmsHelper.sendDebugSms(number, "Help Me I am in trouble\n My Id Is: " + id);
             Toast.makeText(getApplicationContext(), R.string.toast_sending_sms, Toast.LENGTH_SHORT).show();
         }
-        Intent i = new Intent(NavigationDrawer.this,location_tracker.class);
-        i.putExtra("stuid",id);
+        Intent i = new Intent(NavigationDrawer.this, location_tracker.class);
+        i.putExtra("stuid", id);
         startActivity(i);
 
 
     }
+
     private void checkAndUpdateUserPrefNumber() {
         if (TextUtils.isEmpty(mUserMobilePhone) && !mUserMobilePhone.equals(CountryName)) {
             mSharedPreferences
@@ -498,6 +488,7 @@ panic = (Button) findViewById(R.id.button_panic);
                     .apply();
         }
     }
+
     private boolean hasValidPreConditions() {
         if (!hasReadSmsPermission()) {
             requestReadAndSendSmsPermission();
@@ -510,6 +501,7 @@ panic = (Button) findViewById(R.id.button_panic);
         }*/
         return true;
     }
+
     private boolean hasReadSmsPermission() {
         return ContextCompat.checkSelfPermission(NavigationDrawer.this,
                 android.Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED;
@@ -523,10 +515,11 @@ panic = (Button) findViewById(R.id.button_panic);
         ActivityCompat.requestPermissions(NavigationDrawer.this, new String[]{android.Manifest.permission.READ_SMS},
                 SMS_PERMISSION_CODE);
     }
+
     private void SubmitHeartrate() {
 
 
-        String targeturl = "http://android.dhamalexim.com/HumanSafty/HeartRate.php";
+        String targeturl = SERVER_ADDRESS + "HumanSafty/HeartRate.php";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, targeturl,
                 new Response.Listener<String>() {
@@ -623,36 +616,39 @@ panic = (Button) findViewById(R.id.button_panic);
             });
         }
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        if(myThreadConnectBTdevice!=null){
+        if (myThreadConnectBTdevice != null) {
             myThreadConnectBTdevice.cancel();
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode==REQUEST_ENABLE_BT){
-            if(resultCode == Activity.RESULT_OK){
+        if (requestCode == REQUEST_ENABLE_BT) {
+            if (resultCode == Activity.RESULT_OK) {
                 setup();
                 //textwatcher();
-            }else{
+            } else {
                 Toast.makeText(this,
                         "BlueTooth NOT enabled",
                         Toast.LENGTH_SHORT).show();
-              //  textwatcher();
-               // finish();
+                //  textwatcher();
+                // finish();
             }
         }
     }
-    public void textwatcher(){
+
+    public void textwatcher() {
 
     }
+
     //Called in ThreadConnectBTdevice once connect successed
     //to start ThreadConnected
-    private void startThreadConnected(BluetoothSocket socket){
+    private void startThreadConnected(BluetoothSocket socket) {
 
         myThreadConnected = new ThreadConnected(socket);
         myThreadConnected.start();
@@ -702,24 +698,25 @@ panic = (Button) findViewById(R.id.button_panic);
                 }
             }
 
-            if(success){
+            if (success) {
                 //connect successful
                 final String msgconnected = "connect successful:\n"
                         + "BluetoothSocket: " + bluetoothSocket + "\n"
                         + "BluetoothDevice: " + bluetoothDevice;
 
-                runOnUiThread(new Runnable(){
+                runOnUiThread(new Runnable() {
 
                     @Override
                     public void run() {
-                      //  textStatus.setText(msgconnected);
+                        //  textStatus.setText(msgconnected);
 
                         listViewPairedDevice.setVisibility(View.GONE);
 //                        inputPane.setVisibility(View.VISIBLE);
-                    }});
+                    }
+                });
 
                 startThreadConnected(bluetoothSocket);
-            }else{
+            } else {
                 //fail
             }
         }
@@ -740,6 +737,7 @@ panic = (Button) findViewById(R.id.button_panic);
         }
 
     }
+
     private class ThreadConnected extends Thread {
         private final BluetoothSocket connectedBluetoothSocket;
         private final InputStream connectedInputStream;
@@ -773,52 +771,52 @@ panic = (Button) findViewById(R.id.button_panic);
                     String strReceived = new String(buffer, 0, bytes);
                     final String msgReceived = strReceived;
 
-                    runOnUiThread(new Runnable(){
+                    runOnUiThread(new Runnable() {
 
                         @Override
                         public void run() {
-                         //   textStatus.setText(msgReceived);
+                            //   textStatus.setText(msgReceived);
                             textStatus.append(msgReceived);
-                            if(textStatus.getText().toString().length() == 14){
+                            if (textStatus.getText().toString().length() == 14) {
                                 String b1 = textStatus.getText().toString();
-                                String b2 = b1.substring(8,11);
+                                String b2 = b1.substring(8, 11);
                                 //  String result = b1.substring(strReceived.indexOf("*")+1);
                                 //  String result1 = result.substring(result.indexOf("#"));
                                 int b = textStatus.getText().toString().length();
-                              //  SubmitHeartrate();
+                                //  SubmitHeartrate();
                                 textStatus2.setText(b1);
-                                if (Integer.parseInt(b2)>=200){
-                                 //   SubmitHeartrate();
-                                    startActivity(new Intent(NavigationDrawer.this,DemoGeolocationAmbulence.class));
+                                if (Integer.parseInt(b2) >= 200) {
+                                    //   SubmitHeartrate();
+                                    startActivity(new Intent(NavigationDrawer.this, DemoGeolocationAmbulence.class));
                                 }
 
-                               textStatus.setText("");
-                            }
-                          else   if(textStatus.getText().toString().length() == 13){
+                                textStatus.setText("");
+                            } else if (textStatus.getText().toString().length() == 13) {
                                 String b1 = textStatus.getText().toString();
-                                String b2 = b1.substring(8,10);
+                                String b2 = b1.substring(8, 10);
                                 //  String result = b1.substring(strReceived.indexOf("*")+1);
                                 //  String result1 = result.substring(result.indexOf("#"));
                                 int b = textStatus.getText().toString().length();
-                              //  SubmitHeartrate();
+                                //  SubmitHeartrate();
                                 textStatus2.setText(b1);
-                                if (Integer.parseInt(b2)<=60){
-                                  //  SubmitHeartrate();
-                                    startActivity(new Intent(NavigationDrawer.this,DemoGeolocationAmbulence.class));
-                                }
-
-                                   textStatus.setText("");
-                            }
-                            if(textStatus.getText().toString().length() == 9){
-                                if (textStatus.getText().toString() == "*Panic#"){
-                                String b1 = textStatus.getText().toString();
-                                textStatus2.setText(b1);
-                                    startActivity(new Intent(NavigationDrawer.this,DemoGeolocationPolice.class));
+                                if (Integer.parseInt(b2) <= 60) {
+                                    //  SubmitHeartrate();
+                                    startActivity(new Intent(NavigationDrawer.this, DemoGeolocationAmbulence.class));
                                 }
 
                                 textStatus.setText("");
                             }
-                        }});
+                            if (textStatus.getText().toString().length() == 9) {
+                                if (textStatus.getText().toString() == "*Panic#") {
+                                    String b1 = textStatus.getText().toString();
+                                    textStatus2.setText(b1);
+                                    startActivity(new Intent(NavigationDrawer.this, DemoGeolocationPolice.class));
+                                }
+
+                                textStatus.setText("");
+                            }
+                        }
+                    });
 
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
@@ -826,12 +824,13 @@ panic = (Button) findViewById(R.id.button_panic);
 
                     final String msgConnectionLost = "Connection lost:\n"
                             + e.getMessage();
-                    runOnUiThread(new Runnable(){
+                    runOnUiThread(new Runnable() {
 
                         @Override
                         public void run() {
                             textStatus.setText(msgConnectionLost);
-                        }});
+                        }
+                    });
                 }
             }
         }
@@ -854,9 +853,10 @@ panic = (Button) findViewById(R.id.button_panic);
             }
         }
     }
+
     private boolean checkLocation() {
 
-        if(!isLocationEnabled())
+        if (!isLocationEnabled())
             showAlert();
         return isLocationEnabled();
     }
@@ -883,6 +883,7 @@ panic = (Button) findViewById(R.id.button_panic);
                 });
         dialog.show();
     }
+
     private boolean isLocationEnabled() {
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
@@ -906,7 +907,7 @@ panic = (Button) findViewById(R.id.button_panic);
 
         mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
-        if(mLocation == null){
+        if (mLocation == null) {
             startLocationUpdates();
         }
         if (mLocation != null) {
@@ -986,7 +987,7 @@ panic = (Button) findViewById(R.id.button_panic);
 
 
         mLatitudeTextView.setText(String.valueOf(location.getLatitude()));
-        mLongitudeTextView.setText(String.valueOf(location.getLongitude() ));
+        mLongitudeTextView.setText(String.valueOf(location.getLongitude()));
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         // You can now create a LatLng Object for use with maps
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
@@ -1147,7 +1148,6 @@ panic = (Button) findViewById(R.id.button_panic);
         //  }
 
 
-
     }
 
     @Override
@@ -1178,9 +1178,6 @@ panic = (Button) findViewById(R.id.button_panic);
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -1199,12 +1196,12 @@ panic = (Button) findViewById(R.id.button_panic);
 
         if (id == R.id.nav_login) {
 
-            SharedPreferences sp=getSharedPreferences("login",MODE_PRIVATE);
-            SharedPreferences.Editor e=sp.edit();
+            SharedPreferences sp = getSharedPreferences("login", MODE_PRIVATE);
+            SharedPreferences.Editor e = sp.edit();
             e.clear();
             e.commit();
 
-            startActivity(new Intent(NavigationDrawer.this,log.class));
+            startActivity(new Intent(NavigationDrawer.this, log.class));
             finish();
             // Handle the camera action
         } else if (id == R.id.nav_search_person) {
@@ -1212,16 +1209,12 @@ panic = (Button) findViewById(R.id.button_panic);
             Intent i = new Intent(NavigationDrawer.this, SearchPerson.class);
             startActivity(i);
 
-        }
-
-        else if (id == R.id.nav_heartview) {
+        } else if (id == R.id.nav_heartview) {
 
             Intent i = new Intent(NavigationDrawer.this, ViewHeartrate.class);
             startActivity(i);
 
-        }
-
-        else if (id == R.id.nav_emergency) {
+        } else if (id == R.id.nav_emergency) {
 
             Intent i = new Intent(NavigationDrawer.this, AddEmergencyContact.class);
             startActivity(i);

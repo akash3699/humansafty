@@ -38,6 +38,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.pdfupload.example.dell.humansafty.constant.Constant.SERVER_ADDRESS;
+
 public class location_tracker extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         com.google.android.gms.location.LocationListener {
@@ -56,7 +58,7 @@ public class location_tracker extends AppCompatActivity implements GoogleApiClie
     private LocationManager locationManager;
     SharedPreferences sp;
 
-    String Updateurl="http://android.dhamalexim.com/HumanSafty/uploadlocation.php";
+    String Updateurl=SERVER_ADDRESS+"HumanSafty/uploadlocation.php";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
