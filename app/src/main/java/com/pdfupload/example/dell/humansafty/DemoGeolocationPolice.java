@@ -119,8 +119,6 @@ startActivity(new Intent(DemoGeolocation.this,log.class));
 
                             JSONObject jsonObject = new JSONObject(response);
 
-                            // Log.d("url_app product",jsonObject.getString("error"));
-                            //  Log.d("message",jsonObject.getString("message"));
                             String message = jsonObject.getString("message");
 
                             if (message.equals("Login successfull")) {
@@ -189,10 +187,9 @@ startActivity(new Intent(DemoGeolocation.this,log.class));
     }
 
     private void parse(JSONArray jsonArray) {
-
+        System.out.println("*************** Response Locations : " + jsonArray.toString());
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject = null;
-
             try {
                 jsonObject = jsonArray.getJSONObject(i);
 
@@ -221,12 +218,8 @@ startActivity(new Intent(DemoGeolocation.this,log.class));
                     @Override
                     public void onResponse(String response) {
                         try {
-
-
                             JSONObject jsonObject = new JSONObject(response);
 
-                            // Log.d("url_app product",jsonObject.getString("error"));
-                            //  Log.d("message",jsonObject.getString("message"));
                             String message = jsonObject.getString("message");
 
                             if (message.equals("Login successfull")) {
@@ -254,7 +247,7 @@ startActivity(new Intent(DemoGeolocation.this,log.class));
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("myid", a);
                 params.put("id", id);
-
+                System.out.println("********************Sending Notification to this Users : " + params.toString());
                 return params;
             }
         };

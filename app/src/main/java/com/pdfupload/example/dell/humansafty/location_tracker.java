@@ -202,15 +202,10 @@ public class location_tracker extends AppCompatActivity implements GoogleApiClie
         mLatitudeTextView.setText(String.valueOf(location.getLatitude()));
         mLongitudeTextView.setText(String.valueOf(location.getLongitude()));
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-        // You can now create a LatLng Object for use with maps
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
     }
 
     private void uploadlocation() {
-
-     /*   Intent i2 = getIntent();
-        final String id = i2.getStringExtra("stuid");*/
-
         lat2 = mLatitudeTextView.getText().toString();
         lon2 = mLongitudeTextView.getText().toString();
         final ProgressDialog progressDialog = new ProgressDialog(location_tracker.this);
@@ -252,69 +247,11 @@ public class location_tracker extends AppCompatActivity implements GoogleApiClie
                 params.put("id", id);
                 params.put("Latitude", lat2);
                 params.put("Longitude", lon2);
-
-                /*params.put("id",id);
-                params.put("Latitude","123456");
-                params.put("Longitude","123456");*/
-
                 return params;
             }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
-
-      /*  StringRequest stringRequest = new StringRequest(Request.Method.POST, Updateurl,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        //   Toast.makeText(SecondFollowUp.this, response, Toast.LENGTH_LONG).show();
-                        try {
-
-                            // progressDialog.dismiss();
-                            JSONObject jsonObject=new JSONObject(response);
-
-
-                            // Log.d("url_login",jsonObject.getString("result"));
-
-                            String message=jsonObject.getString("message");
-                            //  Log.d("message",jsonObject.getString("message"));
-
-                            if (message.equals("Successfully..")) {
-
-                                Toast.makeText(location_tracker.this, message+"hooooo", Toast.LENGTH_SHORT).show();
-//                                Intent intent=new Intent(getApplicationContext(), SecondFollowUp.class);
-//                                startActivity(intent);
-                            }
-
-                            else
-                            if (jsonObject.getString("error").equals(true))
-                            {
-                                Toast.makeText(location_tracker.this, "Something went wrong", Toast.LENGTH_SHORT).show();
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //  progressDialog.dismiss();
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String,String> params=new HashMap<String, String>();
-                params.put("id",id);
-                params.put("Latitude","123456");
-                params.put("Longitude","123456");
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        requestQueue.add(stringRequest);*/
     }
 
 

@@ -407,8 +407,6 @@ public class NavigationDrawer extends AppCompatActivity
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("id", "1");
                 params.put("myid", id);
-                // params.put("Email","");
-
                 return params;
             }
         };
@@ -450,8 +448,6 @@ public class NavigationDrawer extends AppCompatActivity
     private void parse(JSONArray jsonArray) {
 
         for (int i = 0; i < jsonArray.length(); i++) {
-
-
             try {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
@@ -893,13 +889,6 @@ public class NavigationDrawer extends AppCompatActivity
     @Override
     public void onConnected(Bundle bundle) {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
 
@@ -1009,15 +998,10 @@ public class NavigationDrawer extends AppCompatActivity
                     public void onResponse(String response) {
                         try {
 
-                            //   progressDialog.dismiss();
                             JSONObject jsonObject = new JSONObject(response);
 //login
                             String message = jsonObject.getString("message");
                             if (jsonObject.getString("result").equals("1")) {
-
-                               /*Intent i = new Intent(NavigationDrawer.this,DemoGeolocation.class);
-                                i.putExtra("id",id);
-                                startActivity(i);*/
 
                             } else if (jsonObject.getString("error").equals(true)) {
                                 Toast.makeText(NavigationDrawer.this, "Something Wrong", Toast.LENGTH_SHORT).show();
@@ -1041,113 +1025,11 @@ public class NavigationDrawer extends AppCompatActivity
                 params.put("id", id);
                 params.put("Latitude", mLatitudeTextView.getText().toString());
                 params.put("Longitude", mLongitudeTextView.getText().toString());
-
-                /*params.put("id",id);
-                params.put("Latitude","123456");
-                params.put("Longitude","123456");*/
-
                 return params;
             }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
-
-        //final TextView tv = (TextView) findViewById(R.id.tv);
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
-        // Initialize a new instance of progress dialog
-       /* final ProgressDialog pd = new ProgressDialog(NavigationDrawer.this);
-
-
-
-        // Set progress dialog style horizontal
-        pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-
-        // Set the progress dialog title and message
-        pd.setTitle("Title of progress dialog.");
-        pd.setMessage("Loading.........");
-
-        // Set the progress dialog background color
-        pd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFD4D9D0")));
-
-        pd.setIndeterminate(false);
-                *//*
-                    Set the progress dialog non cancelable
-                    It will disallow user's to cancel progress dialog by clicking outside of dialog
-                    But, user's can cancel the progress dialog by cancel button
-                 *//*
-        pd.setCancelable(false);
-
-        pd.setMax(100);
-
-        // Put a cancel button in progress dialog
-        pd.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener(){
-            // Set a click listener for progress dialog cancel button
-            @Override
-            public void onClick(DialogInterface dialog, int which){
-                // dismiss the progress dialog
-                pd.dismiss();
-                // Tell the system about cancellation
-                isCanceled = true;
-            }
-        });
-
-        // Finally, show the progress dialog
-        pd.show();
-
-        // Set the progress status zero on each button click
-        progressStatus = 0;
-
-        // Start the lengthy operation in a background thread
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(progressStatus < pd.getMax()){
-                    // If user's click the cancel button from progress dialog
-                    if(isCanceled)
-                    {
-                        // Stop the operation/loop
-                        break;
-                    }
-                    // Update the progress status
-                    progressStatus +=1;
-
-                    // Try to sleep the thread for 200 milliseconds
-                    try{
-                        Thread.sleep(200);
-                    }catch(InterruptedException e){
-                        e.printStackTrace();
-                    }
-
-                    // Update the progress bar
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            // Update the progress status
-                            pd.setProgress(progressStatus);
-                          //  tv.setText(progressStatus+"");
-                            // If task execution completed
-                            if(progressStatus == pd.getMax()){
-                                // Dismiss/hide the progress dialog
-                                pd.dismiss();
-                                startActivity(new Intent(NavigationDrawer.this,MainActivity.class));
-                              //  tv.setText("Operation completed.");
-                            }
-                        }
-                    });
-                }
-            }
-        }).start(); // Start the operation*/
-        //  }
-
-
     }
 
     @Override

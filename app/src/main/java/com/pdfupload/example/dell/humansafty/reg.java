@@ -65,17 +65,13 @@ public class reg extends AppCompatActivity {
     }
 
     private void saveRecords2() {
-
-
         String targeturl = SERVER_ADDRESS + "/insertlocation.php";
-
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, targeturl,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
-
 
                             JSONObject jsonObject = new JSONObject(response);
 
@@ -143,7 +139,6 @@ public class reg extends AppCompatActivity {
                         public void onResponse(String response) {
                             try {
                                 progressDialog.dismiss();
-                                System.out.println("Response : ================="+response);
                                 JSONObject jsonObject = new JSONObject(response);
 
                                 Log.d("url_app product", jsonObject.getString("error"));
@@ -167,7 +162,6 @@ public class reg extends AppCompatActivity {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            System.out.println("------------------" + error.toString());
                             progressDialog.dismiss();
                         }
                     }) {
@@ -208,66 +202,3 @@ public class reg extends AppCompatActivity {
 
     }
 }
-
-
-   /* private Button register;
-    private EditText editTextEmail;
-    private ProgressDialog progressDialog;
-    TextView tokenshow;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reg);
-        editTextEmail = (EditText) findViewById(R.id.editTextEmail);
-        register = (Button) findViewById(R.id.register);
-        tokenshow = (TextView) findViewById(R.id.tokenshow);
-    }
-
-    public void sendToken(View view) {
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Registering Device...");
-        progressDialog.show();
-
-        final String token = SharedPreference.getInstance(this).getDeviceToken();
-        final String email = editTextEmail.getText().toString();
-        tokenshow.setText(token);
-
-        if (token == null) {
-            progressDialog.dismiss();
-            Toast.makeText(this, "Token not generated", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.URL_REGISTER_DEVICE,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        progressDialog.dismiss();
-                        try {
-                            JSONObject obj = new JSONObject(response);
-                            Toast.makeText(reg.this, obj.getString("message"), Toast.LENGTH_LONG).show();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        progressDialog.dismiss();
-                        Toast.makeText(reg.this, error.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                }) {
-
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("email", email);
-                params.put("token", token);
-                return params;
-            }
-        };
-        FcmVolley.getInstance(this).addToRequestQueue(stringRequest);
-    }
-}
-*/

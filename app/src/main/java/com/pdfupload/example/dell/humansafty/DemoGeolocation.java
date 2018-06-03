@@ -202,11 +202,11 @@ startActivity(new Intent(DemoGeolocation.this,log.class));
                 double dist = Calculate.distance(la, lo, mLocation.getLatitude(), mLocation.getLongitude());
                 double dist2 = Calculate.distance(mLocation.getLatitude(), mLocation.getLongitude(), la, lo);
                 Log.d("distance", String.valueOf(dist));
-                if (dist <= 5.000) {
-                    sendNotification();
-                } else if (dist2 <= 5.000) {
-                    sendNotification();
-                }
+//                if (dist <= 5.000) {
+                sendNotification();
+//                } else if (dist2 <= 5.000) {
+//                    sendNotification();
+//                }
 
             } catch (JSONException e) {
                 e.printStackTrace();
