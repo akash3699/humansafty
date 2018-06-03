@@ -67,7 +67,7 @@ public class reg extends AppCompatActivity {
     private void saveRecords2() {
 
 
-        String targeturl = SERVER_ADDRESS + "HumanSafty/insertlocation.php";
+        String targeturl = SERVER_ADDRESS + "/insertlocation.php";
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, targeturl,
@@ -98,7 +98,7 @@ public class reg extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        System.out.println("Got error : ---------" + error.toString());
                     }
                 }) {
             @Override
@@ -133,10 +133,8 @@ public class reg extends AppCompatActivity {
             final ProgressDialog progressDialog = new ProgressDialog(reg.this);
             progressDialog.setMessage("loading..Please Wait...");
             progressDialog.show();
-            //String targeturl="http://hospital.myindiamade.com/MoneyTransfer/login.php?apicall=signup";
-            String targeturl = SERVER_ADDRESS + "HumanSafty/login.php?apicall=signup";
-            final String
-                    token = SharedPreference.getInstance(this).getDeviceToken();
+            String targeturl = SERVER_ADDRESS + "/login.php?apicall=signup";
+            final String token = SharedPreference.getInstance(this).getDeviceToken();
             Log.d("targeturl_employee", targeturl);
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, targeturl,
@@ -144,8 +142,8 @@ public class reg extends AppCompatActivity {
                         @Override
                         public void onResponse(String response) {
                             try {
-
                                 progressDialog.dismiss();
+                                System.out.println("Response : ================="+response);
                                 JSONObject jsonObject = new JSONObject(response);
 
                                 Log.d("url_app product", jsonObject.getString("error"));
@@ -169,6 +167,7 @@ public class reg extends AppCompatActivity {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+                            System.out.println("------------------" + error.toString());
                             progressDialog.dismiss();
                         }
                     }) {
@@ -181,7 +180,6 @@ public class reg extends AppCompatActivity {
                     params.put("token", token);
                     params.put("Password", pass.getText().toString());
                     params.put("Re_enter_Password", ccpass.getText().toString());
-
                     return params;
                 }
             };

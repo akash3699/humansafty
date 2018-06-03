@@ -1,10 +1,9 @@
 package com.pdfupload.example.dell.humansafty;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,17 +26,18 @@ import java.util.Map;
 import static com.pdfupload.example.dell.humansafty.constant.Constant.SERVER_ADDRESS;
 
 public class AddEmergencyContact extends AppCompatActivity {
-EditText family1,family2,family3,friend1,friend2,friend3;
-    Button b1,b2,b3,b4,b5,b6,insert;
+    EditText family1, family2, family3, friend1, friend2, friend3;
+    Button b1, b2, b3, b4, b5, b6, insert;
     SharedPreferences sp;
-    String id,fa1,fa2,fa3,fr1,fr2,fr3;
+    String id, fa1, fa2, fa3, fr1, fr2, fr3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_emergency_contact);
 
-        sp=getApplicationContext().getSharedPreferences("login",MODE_PRIVATE);
-        id =  sp.getString("stuid",null);
+        sp = getApplicationContext().getSharedPreferences("login", MODE_PRIVATE);
+        id = sp.getString("stuid", null);
 
         family1 = (EditText) findViewById(R.id.family1);
         family2 = (EditText) findViewById(R.id.family2);
@@ -59,7 +59,7 @@ EditText family1,family2,family3,friend1,friend2,friend3;
                 savedata();
             }
         });
-fetchdata();
+        fetchdata();
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,9 +102,9 @@ fetchdata();
         final ProgressDialog progressDialog = new ProgressDialog(AddEmergencyContact.this);
         progressDialog.setMessage("loading..Please Wait...");
         progressDialog.show();
-        String targeturl=SERVER_ADDRESS+"HumanSafty/updatefriend3.php";
+        String targeturl = SERVER_ADDRESS + "/updatefriend3.php";
 
-        Log.d("targeturl_employee",targeturl);
+        Log.d("targeturl_employee", targeturl);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, targeturl,
                 new Response.Listener<String>() {
@@ -113,20 +113,16 @@ fetchdata();
                         try {
 
                             progressDialog.dismiss();
-                            JSONObject jsonObject=new JSONObject(response);
+                            JSONObject jsonObject = new JSONObject(response);
 
-                            Log.d("url_app product",jsonObject.getString("error"));
-                            Log.d("message",jsonObject.getString("message"));
-                            String message=jsonObject.getString("message");
+                            Log.d("url_app product", jsonObject.getString("error"));
+                            Log.d("message", jsonObject.getString("message"));
+                            String message = jsonObject.getString("message");
 
-                            if (message.equals("Update Successfully..."))
-                            {
-                                Toast.makeText(AddEmergencyContact.this, ""+message, Toast.LENGTH_SHORT).show();
+                            if (message.equals("Update Successfully...")) {
+                                Toast.makeText(AddEmergencyContact.this, "" + message, Toast.LENGTH_SHORT).show();
 
-                            }
-                            else
-                            if (message.equals("User already registered"))
-                            {
+                            } else if (message.equals("User already registered")) {
                                 Toast.makeText(AddEmergencyContact.this, "Please Update Contacts", Toast.LENGTH_SHORT).show();
                                 //  saveRecords2();
                             }
@@ -146,8 +142,8 @@ fetchdata();
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("friend3",friend3.getText().toString());
-                params.put("userid",id);
+                params.put("friend3", friend3.getText().toString());
+                params.put("userid", id);
 
                 return params;
             }
@@ -161,9 +157,9 @@ fetchdata();
         progressDialog.setMessage("loading..Please Wait...");
         progressDialog.show();
         //String targeturl="http://hospital.myindiamade.com/MoneyTransfer/login.php?apicall=signup";
-        String targeturl=SERVER_ADDRESS+"HumanSafty/updatefriend2.php";
+        String targeturl = SERVER_ADDRESS + "/updatefriend2.php";
 
-        Log.d("targeturl_employee",targeturl);
+        Log.d("targeturl_employee", targeturl);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, targeturl,
                 new Response.Listener<String>() {
@@ -172,20 +168,16 @@ fetchdata();
                         try {
 
                             progressDialog.dismiss();
-                            JSONObject jsonObject=new JSONObject(response);
+                            JSONObject jsonObject = new JSONObject(response);
 
-                            Log.d("url_app product",jsonObject.getString("error"));
-                            Log.d("message",jsonObject.getString("message"));
-                            String message=jsonObject.getString("message");
+                            Log.d("url_app product", jsonObject.getString("error"));
+                            Log.d("message", jsonObject.getString("message"));
+                            String message = jsonObject.getString("message");
 
-                            if (message.equals("Update Successfully..."))
-                            {
-                                Toast.makeText(AddEmergencyContact.this, ""+message, Toast.LENGTH_SHORT).show();
+                            if (message.equals("Update Successfully...")) {
+                                Toast.makeText(AddEmergencyContact.this, "" + message, Toast.LENGTH_SHORT).show();
 
-                            }
-                            else
-                            if (message.equals("User already registered"))
-                            {
+                            } else if (message.equals("User already registered")) {
                                 Toast.makeText(AddEmergencyContact.this, "Please Update Contacts", Toast.LENGTH_SHORT).show();
                                 //  saveRecords2();
                             }
@@ -205,8 +197,8 @@ fetchdata();
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("friend2",friend2.getText().toString());
-                params.put("userid",id);
+                params.put("friend2", friend2.getText().toString());
+                params.put("userid", id);
 
                 return params;
             }
@@ -220,9 +212,9 @@ fetchdata();
         progressDialog.setMessage("loading..Please Wait...");
         progressDialog.show();
         //String targeturl="http://hospital.myindiamade.com/MoneyTransfer/login.php?apicall=signup";
-        String targeturl=SERVER_ADDRESS+"HumanSafty/updatefriend1.php";
+        String targeturl = SERVER_ADDRESS + "/updatefriend1.php";
 
-        Log.d("targeturl_employee",targeturl);
+        Log.d("targeturl_employee", targeturl);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, targeturl,
                 new Response.Listener<String>() {
@@ -231,20 +223,16 @@ fetchdata();
                         try {
 
                             progressDialog.dismiss();
-                            JSONObject jsonObject=new JSONObject(response);
+                            JSONObject jsonObject = new JSONObject(response);
 
-                            Log.d("url_app product",jsonObject.getString("error"));
-                            Log.d("message",jsonObject.getString("message"));
-                            String message=jsonObject.getString("message");
+                            Log.d("url_app product", jsonObject.getString("error"));
+                            Log.d("message", jsonObject.getString("message"));
+                            String message = jsonObject.getString("message");
 
-                            if (message.equals("Update Successfully..."))
-                            {
-                                Toast.makeText(AddEmergencyContact.this, ""+message, Toast.LENGTH_SHORT).show();
+                            if (message.equals("Update Successfully...")) {
+                                Toast.makeText(AddEmergencyContact.this, "" + message, Toast.LENGTH_SHORT).show();
 
-                            }
-                            else
-                            if (message.equals("User already registered"))
-                            {
+                            } else if (message.equals("User already registered")) {
                                 Toast.makeText(AddEmergencyContact.this, "Please Update Contacts", Toast.LENGTH_SHORT).show();
                                 //  saveRecords2();
                             }
@@ -264,8 +252,8 @@ fetchdata();
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("friend1",friend1.getText().toString());
-                params.put("userid",id);
+                params.put("friend1", friend1.getText().toString());
+                params.put("userid", id);
 
                 return params;
             }
@@ -279,9 +267,9 @@ fetchdata();
         progressDialog.setMessage("loading..Please Wait...");
         progressDialog.show();
         //String targeturl="http://hospital.myindiamade.com/MoneyTransfer/login.php?apicall=signup";
-        String targeturl=SERVER_ADDRESS+"HumanSafty/updatefamily3.php";
+        String targeturl = SERVER_ADDRESS + "/updatefamily3.php";
 
-        Log.d("targeturl_employee",targeturl);
+        Log.d("targeturl_employee", targeturl);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, targeturl,
                 new Response.Listener<String>() {
@@ -290,20 +278,16 @@ fetchdata();
                         try {
 
                             progressDialog.dismiss();
-                            JSONObject jsonObject=new JSONObject(response);
+                            JSONObject jsonObject = new JSONObject(response);
 
-                            Log.d("url_app product",jsonObject.getString("error"));
-                            Log.d("message",jsonObject.getString("message"));
-                            String message=jsonObject.getString("message");
+                            Log.d("url_app product", jsonObject.getString("error"));
+                            Log.d("message", jsonObject.getString("message"));
+                            String message = jsonObject.getString("message");
 
-                            if (message.equals("Update Successfully..."))
-                            {
-                                Toast.makeText(AddEmergencyContact.this, ""+message, Toast.LENGTH_SHORT).show();
+                            if (message.equals("Update Successfully...")) {
+                                Toast.makeText(AddEmergencyContact.this, "" + message, Toast.LENGTH_SHORT).show();
 
-                            }
-                            else
-                            if (message.equals("User already registered"))
-                            {
+                            } else if (message.equals("User already registered")) {
                                 Toast.makeText(AddEmergencyContact.this, "Please Update Contacts", Toast.LENGTH_SHORT).show();
                                 //  saveRecords2();
                             }
@@ -323,8 +307,8 @@ fetchdata();
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("family3",family3.getText().toString());
-                params.put("userid",id);
+                params.put("family3", family3.getText().toString());
+                params.put("userid", id);
 
                 return params;
             }
@@ -338,9 +322,9 @@ fetchdata();
         progressDialog.setMessage("loading..Please Wait...");
         progressDialog.show();
         //String targeturl="http://hospital.myindiamade.com/MoneyTransfer/login.php?apicall=signup";
-        String targeturl=SERVER_ADDRESS+"HumanSafty/updatefamily2.php";
+        String targeturl = SERVER_ADDRESS + "/updatefamily2.php";
 
-        Log.d("targeturl_employee",targeturl);
+        Log.d("targeturl_employee", targeturl);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, targeturl,
                 new Response.Listener<String>() {
@@ -349,20 +333,16 @@ fetchdata();
                         try {
 
                             progressDialog.dismiss();
-                            JSONObject jsonObject=new JSONObject(response);
+                            JSONObject jsonObject = new JSONObject(response);
 
-                            Log.d("url_app product",jsonObject.getString("error"));
-                            Log.d("message",jsonObject.getString("message"));
-                            String message=jsonObject.getString("message");
+                            Log.d("url_app product", jsonObject.getString("error"));
+                            Log.d("message", jsonObject.getString("message"));
+                            String message = jsonObject.getString("message");
 
-                            if (message.equals("Update Successfully..."))
-                            {
-                                Toast.makeText(AddEmergencyContact.this, ""+message, Toast.LENGTH_SHORT).show();
+                            if (message.equals("Update Successfully...")) {
+                                Toast.makeText(AddEmergencyContact.this, "" + message, Toast.LENGTH_SHORT).show();
 
-                            }
-                            else
-                            if (message.equals("User already registered"))
-                            {
+                            } else if (message.equals("User already registered")) {
                                 Toast.makeText(AddEmergencyContact.this, "Please Update Contacts", Toast.LENGTH_SHORT).show();
                                 //  saveRecords2();
                             }
@@ -382,8 +362,8 @@ fetchdata();
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("family2",family2.getText().toString());
-                params.put("userid",id);
+                params.put("family2", family2.getText().toString());
+                params.put("userid", id);
 
                 return params;
             }
@@ -397,9 +377,9 @@ fetchdata();
         progressDialog.setMessage("loading..Please Wait...");
         progressDialog.show();
         //String targeturl="http://hospital.myindiamade.com/MoneyTransfer/login.php?apicall=signup";
-        String targeturl=SERVER_ADDRESS+"HumanSafty/updatefamily1.php";
+        String targeturl = SERVER_ADDRESS + "/updatefamily1.php";
 
-        Log.d("targeturl_employee",targeturl);
+        Log.d("targeturl_employee", targeturl);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, targeturl,
                 new Response.Listener<String>() {
@@ -408,20 +388,16 @@ fetchdata();
                         try {
 
                             progressDialog.dismiss();
-                            JSONObject jsonObject=new JSONObject(response);
+                            JSONObject jsonObject = new JSONObject(response);
 
-                            Log.d("url_app product",jsonObject.getString("error"));
-                            Log.d("message",jsonObject.getString("message"));
-                            String message=jsonObject.getString("message");
+                            Log.d("url_app product", jsonObject.getString("error"));
+                            Log.d("message", jsonObject.getString("message"));
+                            String message = jsonObject.getString("message");
 
-                            if (message.equals("Update Successfully..."))
-                            {
-                                Toast.makeText(AddEmergencyContact.this, ""+message, Toast.LENGTH_SHORT).show();
+                            if (message.equals("Update Successfully...")) {
+                                Toast.makeText(AddEmergencyContact.this, "" + message, Toast.LENGTH_SHORT).show();
 
-                            }
-                            else
-                            if (message.equals("User already registered"))
-                            {
+                            } else if (message.equals("User already registered")) {
                                 Toast.makeText(AddEmergencyContact.this, "Please Update Contacts", Toast.LENGTH_SHORT).show();
                                 //  saveRecords2();
                             }
@@ -441,8 +417,8 @@ fetchdata();
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("family1",family1.getText().toString());
-                params.put("userid",id);
+                params.put("family1", family1.getText().toString());
+                params.put("userid", id);
 
                 return params;
             }
@@ -452,7 +428,7 @@ fetchdata();
     }
 
     private void fetchdata() {
-        String targetURL_Login=SERVER_ADDRESS+"HumanSafty/insertfamilyfriends.php?apicall=login";
+        String targetURL_Login = SERVER_ADDRESS + "/insertfamilyfriends.php?apicall=login";
 
         StringRequest stringRequestLogInBtn = new StringRequest(Request.Method.POST,
                 targetURL_Login,
@@ -461,19 +437,19 @@ fetchdata();
                     public void onResponse(String response) {
                         try {
 
-                            JSONObject jsonObject=new JSONObject(response);
+                            JSONObject jsonObject = new JSONObject(response);
 
-                            Log.d("url_login",jsonObject.getString("error"));
-                            Log.d("message",jsonObject.getString("message"));
-                            String message=jsonObject.getString("message");
+                            Log.d("url_login", jsonObject.getString("error"));
+                            Log.d("message", jsonObject.getString("message"));
+                            String message = jsonObject.getString("message");
                             String id1 = jsonObject.getString("id");
 
-                            fa1 =jsonObject.getString("family1");
-                            fa2=jsonObject.getString("family2");
-                            fa3 =jsonObject.getString("family3");
-                            fr1=jsonObject.getString("friend1");
-                            fr2 =jsonObject.getString("friend2");
-                            fr3=jsonObject.getString("friend3");
+                            fa1 = jsonObject.getString("family1");
+                            fa2 = jsonObject.getString("family2");
+                            fa3 = jsonObject.getString("family3");
+                            fr1 = jsonObject.getString("friend1");
+                            fr2 = jsonObject.getString("friend2");
+                            fr3 = jsonObject.getString("friend3");
                             if (jsonObject.getString("error").equals("false")) {
                                 family1.setText(fa1);
                                 family2.setText(fa2);
@@ -482,9 +458,8 @@ fetchdata();
                                 friend2.setText(fr2);
                                 friend3.setText(fr3);
 
-                            }
-                            else {
-                                Toast.makeText(AddEmergencyContact.this, ""+message, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(AddEmergencyContact.this, "" + message, Toast.LENGTH_SHORT).show();
                             }
 
                         } catch (JSONException e) {
@@ -498,12 +473,11 @@ fetchdata();
 
                         Toast.makeText(getApplicationContext(), "Network Problem!", Toast.LENGTH_SHORT).show();
                     }
-                })
-        {
+                }) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("userid",id);
+                params.put("userid", id);
 
                 return params;
             }
@@ -517,9 +491,9 @@ fetchdata();
         progressDialog.setMessage("loading..Please Wait...");
         progressDialog.show();
         //String targeturl="http://hospital.myindiamade.com/MoneyTransfer/login.php?apicall=signup";
-        String targeturl=SERVER_ADDRESS+"HumanSafty/insertfamilyfriends.php?apicall=signup";
+        String targeturl = SERVER_ADDRESS + "/insertfamilyfriends.php?apicall=signup";
 
-        Log.d("targeturl_employee",targeturl);
+        Log.d("targeturl_employee", targeturl);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, targeturl,
                 new Response.Listener<String>() {
@@ -528,20 +502,16 @@ fetchdata();
                         try {
 
                             progressDialog.dismiss();
-                            JSONObject jsonObject=new JSONObject(response);
+                            JSONObject jsonObject = new JSONObject(response);
 
-                            Log.d("url_app product",jsonObject.getString("error"));
-                            Log.d("message",jsonObject.getString("message"));
-                            String message=jsonObject.getString("message");
+                            Log.d("url_app product", jsonObject.getString("error"));
+                            Log.d("message", jsonObject.getString("message"));
+                            String message = jsonObject.getString("message");
 
-                            if (message.equals("User registered successfully"))
-                            {
+                            if (message.equals("User registered successfully")) {
                                 Toast.makeText(AddEmergencyContact.this, "Family And Friends Add Successfully", Toast.LENGTH_SHORT).show();
 
-                            }
-                            else
-                            if (message.equals("User already registered"))
-                            {
+                            } else if (message.equals("User already registered")) {
                                 Toast.makeText(AddEmergencyContact.this, "Please Update Contacts", Toast.LENGTH_SHORT).show();
                                 //  saveRecords2();
                             }
@@ -561,13 +531,13 @@ fetchdata();
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("family1",family1.getText().toString());
-                params.put("family2",family2.getText().toString());
-                params.put("family3",family3.getText().toString());
-                params.put("friend1",friend1.getText().toString());
-                params.put("friend2",friend2.getText().toString());
-                params.put("friend3",friend3.getText().toString());
-                params.put("userid",id);
+                params.put("family1", family1.getText().toString());
+                params.put("family2", family2.getText().toString());
+                params.put("family3", family3.getText().toString());
+                params.put("friend1", friend1.getText().toString());
+                params.put("friend2", friend2.getText().toString());
+                params.put("friend3", friend3.getText().toString());
+                params.put("userid", id);
 
                 return params;
             }

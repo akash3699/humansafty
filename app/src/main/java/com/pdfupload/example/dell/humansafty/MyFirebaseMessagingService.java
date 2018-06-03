@@ -19,6 +19,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "MyFirebaseMsgService";
     String message;
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
@@ -48,13 +49,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             //parsing json data
             String title = data.getString("title");
-            message  = data.getString("message");
+            message = data.getString("message");
             String imageUrl = data.getString("image");
-            NotificationCompat.Builder builder = new  NotificationCompat.Builder(this)
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setContentTitle("Humansafty")
                     .setContentText(message);
-            NotificationManager manager = (NotificationManager)     getSystemService(NOTIFICATION_SERVICE);
+            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             manager.notify(0, builder.build());
             //creating MyNotificationManager object
             MyNotificationManager mNotificationManager = new MyNotificationManager(getApplicationContext());
@@ -63,10 +64,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Intent intent = new Intent(getApplicationContext(), SearchPerson.class);
 
             //if there is no image
-            if(imageUrl.equals("null")){
+            if (imageUrl.equals("null")) {
                 //displaying small notification
                 mNotificationManager.showSmallNotification(title, message, intent);
-            }else{
+            } else {
                 //if there is an image
                 //displaying a big notification
                 mNotificationManager.showBigNotification(title, message, imageUrl, intent);

@@ -1,8 +1,8 @@
 package com.pdfupload.example.dell.humansafty;
 
 import android.location.Location;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,7 +36,7 @@ import butterknife.ButterKnife;
 import static com.pdfupload.example.dell.humansafty.constant.Constant.SERVER_ADDRESS;
 
 public class SearchPerson extends AppCompatActivity implements OnMapReadyCallback,
-        GoogleMap.OnMarkerDragListener,GoogleMap.OnMapLongClickListener{
+        GoogleMap.OnMarkerDragListener, GoogleMap.OnMapLongClickListener {
 
     public GoogleMap mMap;
 
@@ -46,14 +46,14 @@ public class SearchPerson extends AppCompatActivity implements OnMapReadyCallbac
     String currentLocation;
 
 
-
     LocationHelper locationHelper;
     private static final String TAG1 = "DashBoard";
     private GoogleApiClient googleApiClient;
     //send message
-    double Latitude,Longitude;
+    double Latitude, Longitude;
     RequestQueue requestQueue;
-    public static final String DISPLAY_URL =SERVER_ADDRESS+"HumanSafty/fetchlocation.php";
+    public static final String DISPLAY_URL = SERVER_ADDRESS + "/fetchlocation.php";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +63,7 @@ public class SearchPerson extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.place_Search_fragment);
         mapFragment.getMapAsync(this);
         SearchPerson = (EditText) findViewById(R.id.editSearchperson);
-        b1 = (Button)findViewById(R.id.button_searchperson);
+        b1 = (Button) findViewById(R.id.button_searchperson);
         ButterKnife.bind(this);
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +79,7 @@ public class SearchPerson extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void fetchlocation() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,DISPLAY_URL, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, DISPLAY_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -103,10 +103,9 @@ public class SearchPerson extends AppCompatActivity implements OnMapReadyCallbac
                 })
 
         {
-            protected Map<String,String> getParams()
-            {
+            protected Map<String, String> getParams() {
 
-                Map<String,String> params=new HashMap<String, String>();
+                Map<String, String> params = new HashMap<String, String>();
 
                 params.put("id", SearchPerson.getText().toString());
                 return params;
@@ -129,8 +128,8 @@ public class SearchPerson extends AppCompatActivity implements OnMapReadyCallbac
 
             try {
                 jsonObject = array.getJSONObject(i);
-                Latitude =    Double.parseDouble(jsonObject.getString("Latitude"));
-                Longitude =  Double.parseDouble(jsonObject.getString("Longitude"));
+                Latitude = Double.parseDouble(jsonObject.getString("Latitude"));
+                Longitude = Double.parseDouble(jsonObject.getString("Longitude"));
                 moveOnMap();
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -185,8 +184,6 @@ public class SearchPerson extends AppCompatActivity implements OnMapReadyCallbac
 
         moveOnMap();
     }
-
-
 
 
     @Override

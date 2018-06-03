@@ -1,8 +1,8 @@
 package com.pdfupload.example.dell.humansafty;
 
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -24,23 +24,23 @@ import java.util.Map;
 import static com.pdfupload.example.dell.humansafty.constant.Constant.SERVER_ADDRESS;
 
 public class ViewHeartrate extends AppCompatActivity {
-ListView heartbeat;
-    String numberurl=SERVER_ADDRESS+"HumanSafty/fetchheart.php";
+    ListView heartbeat;
+    String numberurl = SERVER_ADDRESS + "/fetchheart.php";
     ArrayList<String> CountryName;
     ArrayAdapter<String> madapter;
     JSONArray message;
     SharedPreferences sp;
     String id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_notification);
         fetch();
-        sp=getApplicationContext().getSharedPreferences("login",MODE_PRIVATE);
-        id =  sp.getString("stuid",null);
-        CountryName=new ArrayList<String>();
+        sp = getApplicationContext().getSharedPreferences("login", MODE_PRIVATE);
+        id = sp.getString("stuid", null);
+        CountryName = new ArrayList<String>();
         heartbeat = (ListView) findViewById(R.id.heartbeat);
-
 
 
     }
@@ -53,7 +53,7 @@ ListView heartbeat;
                         JSONObject j = null;
                         try {
 
-                            j=new JSONObject(response);
+                            j = new JSONObject(response);
                             message = j.getJSONArray("message");
                             parse(message);
                         } catch (JSONException e) {
@@ -66,14 +66,14 @@ ListView heartbeat;
                     public void onErrorResponse(VolleyError error) {
                         //  progressDialog.dismiss();
                     }
-                }){
+                }) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("personid",id);
+                params.put("personid", id);
                 return params;
             }
-        } ;
+        };
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
 

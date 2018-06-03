@@ -10,16 +10,17 @@ import org.json.JSONObject;
 public class locationmodel {
     String id, latitude, longitude;
     private boolean isPresent;
+
     public locationmodel(JSONObject jsonObject) {
         try {
-            this.id=""+jsonObject.getString("id");
-            this.latitude=""+jsonObject.getString("Latitude");
-            this.longitude=""+jsonObject.getString("Longitude");
+            this.id = "" + jsonObject.getString("id");
+            this.latitude = "" + jsonObject.getString("Latitude");
+            this.longitude = "" + jsonObject.getString("Longitude");
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        this.isPresent=false;
+        this.isPresent = false;
     }
 
     public String getId() {

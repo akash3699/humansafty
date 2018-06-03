@@ -115,10 +115,10 @@ public class NavigationDrawer extends AppCompatActivity
     //  String mNumberEditText[] = {"9960080097","9890005536","9545545660"};
     private String mUserMobilePhone;
     private SharedPreferences mSharedPreferences;
-    String Updateurl = SERVER_ADDRESS + "HumanSafty/uploadlocation.php";
-    String url = SERVER_ADDRESS + "HumanSafty/updateToken.php";
-    String targeturl = SERVER_ADDRESS + "HumanSafty/balika.php?apicall=login";
-    String numberurl = SERVER_ADDRESS + "HumanSafty/FatchNumber.php";
+    String Updateurl = SERVER_ADDRESS + "/uploadlocation.php";
+    String url = SERVER_ADDRESS + "/updateToken.php";
+    String targeturl = SERVER_ADDRESS + "/balika.php?apicall=login";
+    String numberurl = SERVER_ADDRESS + "/FatchNumber.php";
     ArrayList<String> CountryName;
 
     private int progressStatus = 0;
@@ -519,7 +519,7 @@ public class NavigationDrawer extends AppCompatActivity
     private void SubmitHeartrate() {
 
 
-        String targeturl = SERVER_ADDRESS + "HumanSafty/HeartRate.php";
+        String targeturl = SERVER_ADDRESS + "/HeartRate.php";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, targeturl,
                 new Response.Listener<String>() {

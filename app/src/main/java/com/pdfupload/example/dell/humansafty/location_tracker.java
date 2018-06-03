@@ -1,6 +1,5 @@
 package com.pdfupload.example.dell.humansafty;
 
-import android.*;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,11 +8,11 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -54,26 +53,27 @@ public class location_tracker extends AppCompatActivity implements GoogleApiClie
     private com.google.android.gms.location.LocationListener listener;
     private long UPDATE_INTERVAL = 2 * 1000;  /* 10 secs */
     private long FASTEST_INTERVAL = 2000; /* 2 sec */
-    String lat1,lon1,lat2,lon2,id;
+    String lat1, lon1, lat2, lon2, id;
     private LocationManager locationManager;
     SharedPreferences sp;
 
-    String Updateurl=SERVER_ADDRESS+"HumanSafty/uploadlocation.php";
+    String Updateurl = SERVER_ADDRESS + "/uploadlocation.php";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_tracker);
         mLatitudeTextView = (TextView) findViewById((R.id.latitude_textview));
         mLongitudeTextView = (TextView) findViewById((R.id.longitude_textview));
-        sp=getApplicationContext().getSharedPreferences("login",MODE_PRIVATE);
-        id =  sp.getString("stuid",null);
+        sp = getApplicationContext().getSharedPreferences("login", MODE_PRIVATE);
+        id = sp.getString("stuid", null);
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
 
-        mLocationManager = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
+        mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
         checkLocation(); //check whether location service is enable or not in your  phone
         mLatitudeTextView.addTextChangedListener(new TextWatcher() {
@@ -127,7 +127,7 @@ public class location_tracker extends AppCompatActivity implements GoogleApiClie
 
         mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
-        if(mLocation == null){
+        if (mLocation == null) {
             startLocationUpdates();
         }
         if (mLocation != null) {
@@ -200,7 +200,7 @@ public class location_tracker extends AppCompatActivity implements GoogleApiClie
 
 
         mLatitudeTextView.setText(String.valueOf(location.getLatitude()));
-        mLongitudeTextView.setText(String.valueOf(location.getLongitude() ));
+        mLongitudeTextView.setText(String.valueOf(location.getLongitude()));
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         // You can now create a LatLng Object for use with maps
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
@@ -211,7 +211,7 @@ public class location_tracker extends AppCompatActivity implements GoogleApiClie
      /*   Intent i2 = getIntent();
         final String id = i2.getStringExtra("stuid");*/
 
-        lat2 =mLatitudeTextView.getText().toString();
+        lat2 = mLatitudeTextView.getText().toString();
         lon2 = mLongitudeTextView.getText().toString();
         final ProgressDialog progressDialog = new ProgressDialog(location_tracker.this);
         progressDialog.setMessage("loading..Please Wait...");
@@ -223,18 +223,14 @@ public class location_tracker extends AppCompatActivity implements GoogleApiClie
                         try {
 
                             progressDialog.dismiss();
-                            JSONObject jsonObject=new JSONObject(response);
+                            JSONObject jsonObject = new JSONObject(response);
 //login
-                            String message=jsonObject.getString("message");
+                            String message = jsonObject.getString("message");
                             if (jsonObject.getString("result").equals("1")) {
 
-                                Toast.makeText(location_tracker.this, message+"hooooo", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(location_tracker.this, message + "hooooo", Toast.LENGTH_SHORT).show();
 
-                            }
-
-                            else
-                            if (jsonObject.getString("error").equals(true))
-                            {
+                            } else if (jsonObject.getString("error").equals(true)) {
                                 Toast.makeText(location_tracker.this, "Something Wrong", Toast.LENGTH_SHORT).show();
                             }
 
@@ -253,9 +249,9 @@ public class location_tracker extends AppCompatActivity implements GoogleApiClie
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("id",id);
-                params.put("Latitude",lat2);
-                params.put("Longitude",lon2);
+                params.put("id", id);
+                params.put("Latitude", lat2);
+                params.put("Longitude", lon2);
 
                 /*params.put("id",id);
                 params.put("Latitude","123456");
@@ -322,11 +318,8 @@ public class location_tracker extends AppCompatActivity implements GoogleApiClie
     }
 
 
-
-
-
     private boolean checkLocation() {
-        if(!isLocationEnabled())
+        if (!isLocationEnabled())
             showAlert();
         return isLocationEnabled();
     }

@@ -33,7 +33,7 @@ import java.util.Locale;
  * Created by Jaison
  */
 
-public class LocationHelper implements PermissionUtils.PermissionResultCallback{
+public class LocationHelper implements PermissionUtils.PermissionResultCallback {
 
     private Context context;
     private Activity current_activity;
@@ -48,7 +48,7 @@ public class LocationHelper implements PermissionUtils.PermissionResultCallback{
 
     // list of permissions
 
-    private ArrayList<String> permissions=new ArrayList<>();
+    private ArrayList<String> permissions = new ArrayList<>();
     private PermissionUtils permissionUtils;
 
     private final static int PLAY_SERVICES_REQUEST = 1000;
@@ -56,10 +56,10 @@ public class LocationHelper implements PermissionUtils.PermissionResultCallback{
 
     public LocationHelper(Context context) {
 
-        this.context=context;
-        this.current_activity= (Activity) context;
+        this.context = context;
+        this.current_activity = (Activity) context;
 
-        permissionUtils=new PermissionUtils(context,this);
+        permissionUtils = new PermissionUtils(context, this);
 
         permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
         permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
@@ -68,11 +68,10 @@ public class LocationHelper implements PermissionUtils.PermissionResultCallback{
 
     /**
      * Method to check the availability of location permissions
-     * */
+     */
 
-    public void checkpermission()
-    {
-        permissionUtils.check_permission(permissions,"Need GPS permission for getting your location",1);
+    public void checkpermission() {
+        permissionUtils.check_permission(permissions, "Need GPS permission for getting your location", 1);
     }
 
     private boolean isPermissionGranted() {
@@ -81,7 +80,7 @@ public class LocationHelper implements PermissionUtils.PermissionResultCallback{
 
     /**
      * Method to verify google play services on the device
-     * */
+     */
 
     public boolean checkPlayServices() {
 
@@ -91,7 +90,7 @@ public class LocationHelper implements PermissionUtils.PermissionResultCallback{
 
         if (resultCode != ConnectionResult.SUCCESS) {
             if (googleApiAvailability.isUserResolvableError(resultCode)) {
-                googleApiAvailability.getErrorDialog(current_activity,resultCode,
+                googleApiAvailability.getErrorDialog(current_activity, resultCode,
                         PLAY_SERVICES_REQUEST).show();
             } else {
                 showToast("This device is not supported.");
@@ -103,21 +102,19 @@ public class LocationHelper implements PermissionUtils.PermissionResultCallback{
 
     /**
      * Method to display the location on UI
-     * */
+     */
 
     public Location getLocation() {
 
         if (isPermissionGranted()) {
 
-            try
-            { buildGoogleApiClient();
+            try {
+                buildGoogleApiClient();
                 mLastLocation = LocationServices.FusedLocationApi
                         .getLastLocation(mGoogleApiClient);
 
                 return mLastLocation;
-            }
-            catch (SecurityException e)
-            {
+            } catch (SecurityException e) {
                 e.printStackTrace();
 
             }
@@ -128,14 +125,13 @@ public class LocationHelper implements PermissionUtils.PermissionResultCallback{
 
     }
 
-    public Address getAddress(double latitude,double longitude)
-    {
+    public Address getAddress(double latitude, double longitude) {
         Geocoder geocoder;
         List<Address> addresses;
         geocoder = new Geocoder(context, Locale.getDefault());
 
         try {
-            addresses = geocoder.getFromLocation(latitude,longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+            addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
             return addresses.get(0);
 
         } catch (IOException e) {
@@ -179,7 +175,7 @@ public class LocationHelper implements PermissionUtils.PermissionResultCallback{
                 switch (status.getStatusCode()) {
                     case LocationSettingsStatusCodes.SUCCESS:
                         // All location settings are satisfied. The client can initialize location requests here
-                        mLastLocation=getLocation();
+                        mLastLocation = getLocation();
                         break;
                     case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
                         try {
@@ -203,16 +199,14 @@ public class LocationHelper implements PermissionUtils.PermissionResultCallback{
     /**
      * Method used to connect GoogleApiClient
      */
-    public void connectApiClient()
-    {
+    public void connectApiClient() {
         mGoogleApiClient.connect();
     }
 
     /**
      * Method used to get the GoogleApiClient
      */
-    public GoogleApiClient getGoogleApiCLient()
-    {
+    public GoogleApiClient getGoogleApiCLient() {
         return mGoogleApiClient;
     }
 
@@ -220,9 +214,8 @@ public class LocationHelper implements PermissionUtils.PermissionResultCallback{
     /**
      * Handles the permission results
      */
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
-    {
-       permissionUtils.onRequestPermissionsResult(requestCode,permissions,grantResults);
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        permissionUtils.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     /**
@@ -234,7 +227,7 @@ public class LocationHelper implements PermissionUtils.PermissionResultCallback{
                 switch (resultCode) {
                     case Activity.RESULT_OK:
                         // All required changes were successfully made
-                        mLastLocation=getLocation();
+                        mLastLocation = getLocation();
                         break;
                     case Activity.RESULT_CANCELED:
                         // The user was asked to change settings, but chose not to
@@ -249,30 +242,28 @@ public class LocationHelper implements PermissionUtils.PermissionResultCallback{
 
     @Override
     public void PermissionGranted(int request_code) {
-        Log.i("PERMISSION","GRANTED");
-        isPermissionGranted=true;
+        Log.i("PERMISSION", "GRANTED");
+        isPermissionGranted = true;
     }
 
     @Override
     public void PartialPermissionGranted(int request_code, ArrayList<String> granted_permissions) {
-        Log.i("PERMISSION PARTIALLY","GRANTED");
+        Log.i("PERMISSION PARTIALLY", "GRANTED");
     }
 
     @Override
     public void PermissionDenied(int request_code) {
-        Log.i("PERMISSION","DENIED");
+        Log.i("PERMISSION", "DENIED");
     }
 
     @Override
     public void NeverAskAgain(int request_code) {
-        Log.i("PERMISSION","NEVER ASK AGAIN");
+        Log.i("PERMISSION", "NEVER ASK AGAIN");
     }
 
 
-
-    private void showToast(String message)
-    {
-        Toast.makeText(context,message,Toast.LENGTH_SHORT).show();
+    private void showToast(String message) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 
 

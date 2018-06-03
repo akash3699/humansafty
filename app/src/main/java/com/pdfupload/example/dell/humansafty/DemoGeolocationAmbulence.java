@@ -7,11 +7,11 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,12 +42,12 @@ import static com.pdfupload.example.dell.humansafty.constant.Constant.SERVER_ADD
 public class DemoGeolocationAmbulence extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         com.google.android.gms.location.LocationListener {
-    String targeturl=SERVER_ADDRESS+"HumanSafty/ambulance.php?apicall=login";
-    String targeturl2=SERVER_ADDRESS+"HumanSafty/balika.php?apicall=login";
-    String numberurl=SERVER_ADDRESS+"HumanSafty/fetchalllotaction.php";
+    String targeturl = SERVER_ADDRESS + "/ambulance.php?apicall=login";
+    String targeturl2 = SERVER_ADDRESS + "/balika.php?apicall=login";
+    String numberurl = SERVER_ADDRESS + "/fetchalllotaction.php";
 
     private List<locationmodel> dataObjectList;
-    double la,lo;
+    double la, lo;
     String id;
     private static final String TAG = "MainActivity";
     private TextView mLatitudeTextView;
@@ -60,7 +60,7 @@ public class DemoGeolocationAmbulence extends AppCompatActivity implements Googl
     private com.google.android.gms.location.LocationListener listener;
     private long UPDATE_INTERVAL = 2 * 1000;  /* 10 secs */
     private long FASTEST_INTERVAL = 2000; /* 2 sec */
-    String lat1,lon1,lat2,lon2,a;
+    String lat1, lon1, lat2, lon2, a;
     private LocationManager locationManager;
 
     SharedPreferences sp;
@@ -70,10 +70,10 @@ public class DemoGeolocationAmbulence extends AppCompatActivity implements Googl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demo_geolocation_ambulence);
 
-        sp=getApplicationContext().getSharedPreferences("login",MODE_PRIVATE);
-        a =  sp.getString("stuid",null);
-        Log.d("oyee",a);
-         sendNotification();
+        sp = getApplicationContext().getSharedPreferences("login", MODE_PRIVATE);
+        a = sp.getString("stuid", null);
+        Log.d("oyee", a);
+        sendNotification();
         mLatitudeTextView = (TextView) findViewById((R.id.lat1_amb));
         mLongitudeTextView = (TextView) findViewById((R.id.long1_amb));
         getLocation();
@@ -102,7 +102,7 @@ startActivity(new Intent(DemoGeolocation.this,log.class));
                 .addApi(LocationServices.API)
                 .build();
 
-        mLocationManager = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
+        mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
         checkLocation(); //check whether location service is enable or not in your  phone
 
@@ -117,17 +117,15 @@ startActivity(new Intent(DemoGeolocation.this,log.class));
                         try {
 
 
-                            JSONObject jsonObject=new JSONObject(response);
+                            JSONObject jsonObject = new JSONObject(response);
 
                             // Log.d("url_app product",jsonObject.getString("error"));
                             //  Log.d("message",jsonObject.getString("message"));
-                            String message=jsonObject.getString("message");
+                            String message = jsonObject.getString("message");
 
-                            if (message.equals("Login successfull"))
-                            {
+                            if (message.equals("Login successfull")) {
                                 Toast.makeText(DemoGeolocationAmbulence.this, "Notification Send", Toast.LENGTH_SHORT).show();
-                            }
-                            else
+                            } else
 
                             {
                                 Toast.makeText(DemoGeolocationAmbulence.this, message, Toast.LENGTH_SHORT).show();
@@ -148,8 +146,8 @@ startActivity(new Intent(DemoGeolocation.this,log.class));
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("myid",a);
-               // params.put("id",id);
+                params.put("myid", a);
+                // params.put("id",id);
 
                 return params;
             }
@@ -169,8 +167,7 @@ startActivity(new Intent(DemoGeolocation.this,log.class));
                         JSONObject j = null;
                         try {
 
-                            j=new JSONObject(response);
-
+                            j = new JSONObject(response);
 
 
                             JSONArray message = j.getJSONArray("message");
@@ -185,7 +182,7 @@ startActivity(new Intent(DemoGeolocation.this,log.class));
                     public void onErrorResponse(VolleyError error) {
                         //  progressDialog.dismiss();
                     }
-                }) ;
+                });
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
 
@@ -194,7 +191,7 @@ startActivity(new Intent(DemoGeolocation.this,log.class));
     private void parse(JSONArray jsonArray) {
 
         for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject jsonObject =null;
+            JSONObject jsonObject = null;
 
             try {
                 jsonObject = jsonArray.getJSONObject(i);
@@ -202,13 +199,12 @@ startActivity(new Intent(DemoGeolocation.this,log.class));
                 id = jsonObject.getString("id");
                 la = Double.parseDouble(jsonObject.getString("Latitude"));
                 lo = jsonObject.getDouble("Longitude");
-                double dist = Calculate.distance(la,lo,mLocation.getLatitude(), mLocation.getLongitude());
-                double dist2 = Calculate.distance(mLocation.getLatitude(), mLocation.getLongitude(),la,lo);
+                double dist = Calculate.distance(la, lo, mLocation.getLatitude(), mLocation.getLongitude());
+                double dist2 = Calculate.distance(mLocation.getLatitude(), mLocation.getLongitude(), la, lo);
                 Log.d("distance", String.valueOf(dist));
                 if (dist <= 5.000) {
                     sendNotification2();
-                }
-                else if(dist2 <= 5.000){
+                } else if (dist2 <= 5.000) {
                     sendNotification2();
                 }
 
@@ -216,7 +212,7 @@ startActivity(new Intent(DemoGeolocation.this,log.class));
                 e.printStackTrace();
             }
         }
-        startActivity(new Intent(DemoGeolocationAmbulence.this,location_tracker.class));
+        startActivity(new Intent(DemoGeolocationAmbulence.this, location_tracker.class));
     }
 
     private void sendNotification2() {
@@ -257,7 +253,7 @@ startActivity(new Intent(DemoGeolocation.this,log.class));
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("myid", a);
-                 params.put("id",id);
+                params.put("id", id);
 
                 return params;
             }
@@ -283,7 +279,7 @@ startActivity(new Intent(DemoGeolocation.this,log.class));
 
         mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
-        if(mLocation == null){
+        if (mLocation == null) {
             startLocationUpdates();
         }
         if (mLocation != null) {
@@ -357,17 +353,15 @@ startActivity(new Intent(DemoGeolocation.this,log.class));
 
 
         mLatitudeTextView.setText(String.valueOf(location.getLatitude()));
-        mLongitudeTextView.setText(String.valueOf(location.getLongitude() ));
+        mLongitudeTextView.setText(String.valueOf(location.getLongitude()));
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         // You can now create a LatLng Object for use with maps
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
     }
 
 
-
-
     private boolean checkLocation() {
-        if(!isLocationEnabled())
+        if (!isLocationEnabled())
             showAlert();
         return isLocationEnabled();
     }

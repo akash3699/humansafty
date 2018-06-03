@@ -1,7 +1,7 @@
 package com.pdfupload.example.dell.humansafty;
 
 class Calculate {
-     static double distance(double lat1, double lng1, double lat2, double lng2) {
+    static double distance(double lat1, double lng1, double lat2, double lng2) {
         double earthRadius = 6371; // in  kilometer, change to 3958.75 for miles output
         double dLat = Math.toRadians(lat2 - lat1);
         double dLng = Math.toRadians(lng2 - lng1);

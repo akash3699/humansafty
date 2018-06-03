@@ -4,8 +4,8 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -29,29 +29,30 @@ import java.util.Map;
 import static com.pdfupload.example.dell.humansafty.constant.Constant.SERVER_ADDRESS;
 
 public class log extends AppCompatActivity {
-    EditText login_id,login_pwd;
+    EditText login_id, login_pwd;
     Button login_button;
     TextView linktoregister;
     ProgressDialog progressDialog;
-    String username,password;
+    String username, password;
 
     SharedPreferences sp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log);
 
 
-        sp=getSharedPreferences("login",MODE_PRIVATE);
+        sp = getSharedPreferences("login", MODE_PRIVATE);
 
 
-        login_id =(EditText)findViewById(R.id.login_id);
-        login_pwd =(EditText)findViewById(R.id.login_pwd);
-        login_button = (Button)findViewById(R.id.login_button);
-        linktoregister = (TextView)findViewById(R.id.linktoregister);
+        login_id = (EditText) findViewById(R.id.login_id);
+        login_pwd = (EditText) findViewById(R.id.login_pwd);
+        login_button = (Button) findViewById(R.id.login_button);
+        linktoregister = (TextView) findViewById(R.id.linktoregister);
 
-        if(sp.contains("username") && sp.contains("password")){
-           startActivity(new Intent(log.this,NavigationDrawer.class));
+        if (sp.contains("username") && sp.contains("password")) {
+            startActivity(new Intent(log.this, NavigationDrawer.class));
             finish();   //finish current activity
         }
 
@@ -59,12 +60,11 @@ public class log extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(log.this,reg.class);
+                Intent i = new Intent(log.this, reg.class);
                 startActivity(i);
 
             }
         });
-
 
 
         login_button.setOnClickListener(new View.OnClickListener() {
@@ -78,15 +78,14 @@ public class log extends AppCompatActivity {
     }
 
 
-    public void LoginBlock()
-    {
-        progressDialog=new ProgressDialog(log.this);
+    public void LoginBlock() {
+        progressDialog = new ProgressDialog(log.this);
         progressDialog.setMessage("Please Wait ...Loading....");
         progressDialog.show();
 
         // String targetURL_Login="http://hospital.myindiamade.com/MoneyTransfer/login.php?apicall=login";
 
-        String targetURL_Login=SERVER_ADDRESS+"HumanSafty/login.php?apicall=login";
+        String targetURL_Login = SERVER_ADDRESS + "/login.php?apicall=login";
 
         StringRequest stringRequestLogInBtn = new StringRequest(Request.Method.POST,
                 targetURL_Login,
@@ -95,31 +94,30 @@ public class log extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             progressDialog.dismiss();
-                            JSONObject jsonObject=new JSONObject(response);
+                            System.out.println(response);
+                            JSONObject jsonObject = new JSONObject(response);
+                            Log.d("url_login", jsonObject.getString("error"));
+                            Log.d("message", jsonObject.getString("message"));
+                            String message = jsonObject.getString("message");
+                            String id = jsonObject.getString("id");
 
-                            Log.d("url_login",jsonObject.getString("error"));
-                            Log.d("message",jsonObject.getString("message"));
-                            String message=jsonObject.getString("message");
-                            String id=jsonObject.getString("id");
-
-                            username =jsonObject.getString("Username");
-                            password=jsonObject.getString("Password");
+                            username = jsonObject.getString("Username");
+                            password = jsonObject.getString("Password");
                             if (jsonObject.getString("error").equals("false")) {
 
 
-                                Toast.makeText(log.this, ""+jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                                Intent intent=new Intent(getApplicationContext(), NavigationDrawer.class);
+                                Toast.makeText(log.this, "" + jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getApplicationContext(), NavigationDrawer.class);
 
-                                SharedPreferences.Editor e=sp.edit();
-                                e.putString("username",username);
-                                e.putString("password",password);
-                                e.putString("stuid",id);
+                                SharedPreferences.Editor e = sp.edit();
+                                e.putString("username", username);
+                                e.putString("password", password);
+                                e.putString("stuid", id);
                                 e.commit();
 
                                 startActivity(intent);
-                            }
-                            else {
-                                Toast.makeText(log.this, ""+message, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(log.this, "" + message, Toast.LENGTH_SHORT).show();
                             }
 
                         } catch (JSONException e) {
@@ -133,13 +131,12 @@ public class log extends AppCompatActivity {
                         progressDialog.dismiss();
                         Toast.makeText(getApplicationContext(), "Network Problem!", Toast.LENGTH_SHORT).show();
                     }
-                })
-        {
+                }) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("Username",login_id.getText().toString());
-                params.put("Password",login_pwd.getText().toString());
+                params.put("Username", login_id.getText().toString());
+                params.put("Password", login_pwd.getText().toString());
 
 
                 return params;
@@ -170,7 +167,6 @@ public class log extends AppCompatActivity {
         alertDialog.show();
 
     }
-
 
 
 }
